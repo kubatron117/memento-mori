@@ -23,4 +23,9 @@ Things you may want to cover:
 
 * ...
 
+Gem installations:
+- rails generate rspec:install
+- rails generate rodauth:install --json --argon2
+
+
 Scaffolds:
