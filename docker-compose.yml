@@ -1,0 +1,57 @@
+services:
+  mariadb:
+    image: mariadb:11.5.2
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - mariadb-data-mariadb:/var/lib/mariadb/data
+    ports:
+      - "3306:3306"
+    networks:
+      - default
+      - memento-mori-network-ext
+  rails:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mariadb
+#      - memcached
+    volumes:
+      - .:/app
+    environment:
+      EDITOR: nano --wait
+    env_file:
+      - .env
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0"
+    networks:
+      - memento-mori-network-ext
+  mailhog:
+    image: mailhog/mailhog
+    depends_on:
+      - rails
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - memento-mori-network-ext
+#  memcached:
+#    image: memcached:1.6.31-alpine
+#    restart: unless-stopped
+#    ports:
+#      - "11211:11211"
+#    command: [ "-m", "1024" ]
+#    networks:
+#      - memento-mori-network-ext
+volumes:
+  mariadb-data-mariadb:
+    driver: local
+
+networks:
+  memento-mori-network-ext:
+    external: true
