@@ -29,3 +29,4 @@ Gem installations:
 
 
 Scaffolds:
+- rails generate scaffold WeeksInLife start_date:date end_date:date week_number:integer memo:string{2048}  account:references
