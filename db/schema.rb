@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_13_093426) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_13_093752) do
   create_table "account_login_change_keys", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "key", null: false
     t.string "login", null: false
@@ -38,6 +38,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_13_093426) do
     t.integer "status", default: 1, null: false
     t.string "email", null: false
     t.string "password_hash"
+    t.string "first_name", limit: 50
+    t.string "last_name", limit: 50
+    t.date "date_of_birth"
+    t.date "estimated_lifespan"
     t.index ["email"], name: "index_accounts_on_email", unique: true
   end
 
