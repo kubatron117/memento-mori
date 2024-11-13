@@ -4,10 +4,13 @@ class CreateWeeksInLives < ActiveRecord::Migration[8.0]
       t.date :start_date
       t.date :end_date
       t.integer :week_number
+      t.integer :year
       t.string :memo, limit: 2048
       t.references :account, null: false, foreign_key: true
 
       t.timestamps
     end
+
+    add_index :weeks_in_lives, [:account_id, :week_number, :year], unique: true
   end
 end

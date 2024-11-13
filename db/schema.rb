@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_13_113954) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_13_114444) do
   create_table "account_login_change_keys", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
     t.string "key", null: false
     t.string "login", null: false
@@ -51,10 +51,12 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_13_113954) do
     t.date "start_date"
     t.date "end_date"
     t.integer "week_number"
+    t.integer "year"
     t.string "memo", limit: 2048
     t.bigint "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["account_id", "week_number", "year"], name: "index_weeks_in_lives_on_account_id_and_week_number_and_year", unique: true
     t.index ["account_id"], name: "index_weeks_in_lives_on_account_id"
   end
 

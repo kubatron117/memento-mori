@@ -48,6 +48,6 @@ class WeeksInLivesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def weeks_in_life_params
-      params.expect(weeks_in_life: [ :start_date, :end_date, :week_number, :memo, :account_id ])
+      params.expect(weeks_in_life: [ :start_date, :end_date, :week_number, :year, :memo, :account_id ])
     end
 end
