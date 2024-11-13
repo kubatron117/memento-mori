@@ -6,5 +6,7 @@ class AddAccountAttributes < ActiveRecord::Migration[8.0]
     add_column :accounts, :estimated_lifespan, :date
     add_column :accounts, :user_agreement, :boolean
     add_column :accounts, :date_of_agreement, :datetime
+    add_column :accounts, :created_at, :datetime
+    add_column :accounts, :updated_at, :datetime
   end
 end

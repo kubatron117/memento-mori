@@ -44,6 +44,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_13_114444) do
     t.date "estimated_lifespan"
     t.boolean "user_agreement"
     t.datetime "date_of_agreement"
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["email"], name: "index_accounts_on_email", unique: true
   end
 
