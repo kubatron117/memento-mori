@@ -27,9 +27,9 @@ class GenerateWeekInLiveJob < ApplicationJob
     next_year = next_week_date.cwyear
 
     Account.find_each do |account|
-      weeks_in_life = WeekInLife.where(week_number: next_week_number, year: next_year, account_id: account.id)
+      weeks_in_life = WeeksInLife.where(week_number: next_week_number, year: next_year, account_id: account.id)
       if weeks_in_life.blank?
-        WeekInLife.create(
+        WeeksInLife.create(
           start_date: next_week_date.beginning_of_week,
           end_date: next_week_date.end_of_week,
           week_number: next_week_number,
