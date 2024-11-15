@@ -388,7 +388,7 @@ DEPENDENCIES
   shoulda-matchers (~> 6.4.0)
   solid_cable
   solid_cache
-  solid_queue
+  solid_queue (~> 1.0.1)
   thruster (~> 0.1.8)
   tzinfo-data
 

@@ -2,7 +2,7 @@
 FROM ruby:3.3.6-bookworm
 
 # Instalace závislostí pro Rails
-RUN apt-get update -qq && apt-get install default-mysql-client  -y
+RUN apt-get update -qq && apt-get install mariadb-client libmariadb-dev  -y
 
 # Nastavení pracovního adresáře v kontejneru
 WORKDIR /app
