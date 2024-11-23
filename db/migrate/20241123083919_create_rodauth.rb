@@ -1,9 +1,11 @@
 class CreateRodauth < ActiveRecord::Migration[8.0]
   def change
+    enable_extension "citext"
+
     create_table :accounts do |t|
       t.integer :status, null: false, default: 1
-      t.string :email, null: false
-      t.index :email, unique: true
+      t.citext :email, null: false
+      t.index :email, unique: true, where: "status IN (1, 2)"
       t.string :password_hash
     end
 
@@ -13,7 +15,7 @@ class CreateRodauth < ActiveRecord::Migration[8.0]
       t.foreign_key :accounts, column: :id
       t.string :key, null: false
       t.datetime :deadline, null: false
-      t.datetime :email_last_sent, null: false, default: -> { "CURRENT_TIMESTAMP(6)" }
+      t.datetime :email_last_sent, null: false, default: -> { "CURRENT_TIMESTAMP" }
     end
 
     # Used by the account verification feature
@@ -21,8 +23,8 @@ class CreateRodauth < ActiveRecord::Migration[8.0]
       t.bigint :id, primary_key: true
       t.foreign_key :accounts, column: :id
       t.string :key, null: false
-      t.datetime :requested_at, null: false, default: -> { "CURRENT_TIMESTAMP(6)" }
-      t.datetime :email_last_sent, null: false, default: -> { "CURRENT_TIMESTAMP(6)" }
+      t.datetime :requested_at, null: false, default: -> { "CURRENT_TIMESTAMP" }
+      t.datetime :email_last_sent, null: false, default: -> { "CURRENT_TIMESTAMP" }
     end
 
     # Used by the verify login change feature

@@ -10,7 +10,5 @@ class CreateWeeksInLives < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
-
-    add_index :weeks_in_lives, [:account_id, :week_number, :year], unique: true
   end
 end

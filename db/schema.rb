@@ -10,33 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_15_080401) do
-  create_table "account_login_change_keys", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+ActiveRecord::Schema[8.0].define(version: 2024_11_23_083936) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "citext"
+  enable_extension "pg_catalog.plpgsql"
+
+  create_table "account_login_change_keys", force: :cascade do |t|
     t.string "key", null: false
     t.string "login", null: false
     t.datetime "deadline", null: false
   end
 
-  create_table "account_password_reset_keys", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "account_password_reset_keys", force: :cascade do |t|
     t.string "key", null: false
     t.datetime "deadline", null: false
-    t.datetime "email_last_sent", default: -> { "current_timestamp(6)" }, null: false
+    t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP" }, null: false
   end
 
-  create_table "account_remember_keys", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "account_remember_keys", force: :cascade do |t|
     t.string "key", null: false
     t.datetime "deadline", null: false
   end
 
-  create_table "account_verification_keys", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "account_verification_keys", force: :cascade do |t|
     t.string "key", null: false
-    t.datetime "requested_at", default: -> { "current_timestamp(6)" }, null: false
-    t.datetime "email_last_sent", default: -> { "current_timestamp(6)" }, null: false
+    t.datetime "requested_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "email_last_sent", default: -> { "CURRENT_TIMESTAMP" }, null: false
   end
 
-  create_table "accounts", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "accounts", force: :cascade do |t|
     t.integer "status", default: 1, null: false
-    t.string "email", null: false
+    t.citext "email", null: false
     t.string "password_hash"
     t.string "first_name", limit: 50
     t.string "last_name", limit: 50
@@ -46,10 +50,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_15_080401) do
     t.datetime "date_of_agreement"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.index ["email"], name: "index_accounts_on_email", unique: true
+    t.index ["email"], name: "index_accounts_on_email", unique: true, where: "(status = ANY (ARRAY[1, 2]))"
   end
 
-  create_table "solid_queue_blocked_executions", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_blocked_executions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.string "queue_name", null: false
     t.integer "priority", default: 0, null: false
@@ -61,7 +65,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_15_080401) do
     t.index ["job_id"], name: "index_solid_queue_blocked_executions_on_job_id", unique: true
   end
 
-  create_table "solid_queue_claimed_executions", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_claimed_executions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.bigint "process_id"
     t.datetime "created_at", null: false
@@ -69,14 +73,14 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_15_080401) do
     t.index ["process_id", "job_id"], name: "index_solid_queue_claimed_executions_on_process_id_and_job_id"
   end
 
-  create_table "solid_queue_failed_executions", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_failed_executions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.text "error"
     t.datetime "created_at", null: false
     t.index ["job_id"], name: "index_solid_queue_failed_executions_on_job_id", unique: true
   end
 
-  create_table "solid_queue_jobs", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_jobs", force: :cascade do |t|
     t.string "queue_name", null: false
     t.string "class_name", null: false
     t.text "arguments"
@@ -94,13 +98,13 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_15_080401) do
     t.index ["scheduled_at", "finished_at"], name: "index_solid_queue_jobs_for_alerting"
   end
 
-  create_table "solid_queue_pauses", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_pauses", force: :cascade do |t|
     t.string "queue_name", null: false
     t.datetime "created_at", null: false
     t.index ["queue_name"], name: "index_solid_queue_pauses_on_queue_name", unique: true
   end
 
-  create_table "solid_queue_processes", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_processes", force: :cascade do |t|
     t.string "kind", null: false
     t.datetime "last_heartbeat_at", null: false
     t.bigint "supervisor_id"
@@ -114,7 +118,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_15_080401) do
     t.index ["supervisor_id"], name: "index_solid_queue_processes_on_supervisor_id"
   end
 
-  create_table "solid_queue_ready_executions", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_ready_executions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.string "queue_name", null: false
     t.integer "priority", default: 0, null: false
@@ -124,7 +128,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_15_080401) do
     t.index ["queue_name", "priority", "job_id"], name: "index_solid_queue_poll_by_queue"
   end
 
-  create_table "solid_queue_recurring_executions", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_recurring_executions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.string "task_key", null: false
     t.datetime "run_at", null: false
@@ -133,7 +137,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_15_080401) do
     t.index ["task_key", "run_at"], name: "index_solid_queue_recurring_executions_on_task_key_and_run_at", unique: true
   end
 
-  create_table "solid_queue_recurring_tasks", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_recurring_tasks", force: :cascade do |t|
     t.string "key", null: false
     t.string "schedule", null: false
     t.string "command", limit: 2048
@@ -149,7 +153,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_15_080401) do
     t.index ["static"], name: "index_solid_queue_recurring_tasks_on_static"
   end
 
-  create_table "solid_queue_scheduled_executions", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_scheduled_executions", force: :cascade do |t|
     t.bigint "job_id", null: false
     t.string "queue_name", null: false
     t.integer "priority", default: 0, null: false
@@ -159,7 +163,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_15_080401) do
     t.index ["scheduled_at", "priority", "job_id"], name: "index_solid_queue_dispatch_all"
   end
 
-  create_table "solid_queue_semaphores", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "solid_queue_semaphores", force: :cascade do |t|
     t.string "key", null: false
     t.integer "value", default: 1, null: false
     t.datetime "expires_at", null: false
@@ -170,7 +174,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_15_080401) do
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
   end
 
-  create_table "weeks_in_lives", charset: "utf8mb4", collation: "utf8mb4_uca1400_ai_ci", force: :cascade do |t|
+  create_table "weeks_in_lives", force: :cascade do |t|
     t.date "start_date"
     t.date "end_date"
     t.integer "week_number"
@@ -179,7 +183,6 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_15_080401) do
     t.bigint "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["account_id", "week_number", "year"], name: "index_weeks_in_lives_on_account_id_and_week_number_and_year", unique: true
     t.index ["account_id"], name: "index_weeks_in_lives_on_account_id"
   end
 

@@ -1,15 +1,14 @@
 services:
-  mariadb:
-    image: mariadb:11.5.2
+  postgres:
+    image: postgres:17.2
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DATABASE}
     volumes:
-      - mariadb-data-mariadb:/var/lib/mariadb/data
+      - pg-data-memento-mori:/var/lib/mementomori/postgresql/data
     ports:
-      - "3306:3306"
+      - "5432:5432"
     networks:
       - default
       - memento-mori-network-ext
@@ -20,7 +19,7 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - mariadb
+      - postgres
 #      - memcached
     volumes:
       - .:/app
@@ -49,7 +48,7 @@ services:
 #    networks:
 #      - memento-mori-network-ext
 volumes:
-  mariadb-data-mariadb:
+  pg-data-memento-mori:
     driver: local
 
 networks:

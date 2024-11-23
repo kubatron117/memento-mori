@@ -13,7 +13,7 @@ class RodauthMain < Rodauth::Rails::Auth
 
     # ==> General
     # Initialize Sequel and have it reuse Active Record's database connection.
-    db Sequel.mysql2(extensions: :activerecord_connection, keep_reference: false)
+    db Sequel.postgres(extensions: :activerecord_connection, keep_reference: false)
     # Avoid DB query that checks accounts table schema at boot time.
     convert_token_id_to_integer? { Account.columns_hash["id"].type == :integer }
 
@@ -26,7 +26,7 @@ class RodauthMain < Rodauth::Rails::Auth
 
     # The secret key used for hashing public-facing tokens for various features.
     # Defaults to Rails `secret_key_base`, but you can use your own secret key.
-    # hmac_secret "0bc06906b8bf5f4e109826487b6328b2969b9ccbb685275eeb9c28dc50a33c2113e4a11ea1721c5b392fc6b1d4a8df4396014536cc61fb9de8200ac7555056e1"
+    # hmac_secret "a2e5bf558b4e78f2ca5d2fd0202293fdb064ebf676e558213ffa60d12121c68aa957a05d13d5a462ba833a4c67172b435d2dadddd1611891f6fe992be63c6fb0"
 
     # Use a rotatable password pepper when hashing passwords with Argon2.
     # argon2_secret { hmac_secret }

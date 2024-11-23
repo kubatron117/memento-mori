@@ -23,6 +23,8 @@ Things you may want to cover:
 
 * ...
 
+./rails-new  memento-mori --database=mariadb-mysql --api --skip-sprockets --skip-action-text --skip-active-storage --skip-webpack-install --skip-test
+
 Gem installations:
 - rails generate rspec:install
 - rails generate rodauth:install --json --argon2
