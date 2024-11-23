@@ -1,11 +1,15 @@
-class WeeksInLivesController < ApplicationController
+class Api::V1::WeeksInLivesController < ApplicationController
   before_action :set_weeks_in_life, only: %i[ show update destroy ]
 
   # GET /weeks_in_lives
   # GET /weeks_in_lives.json
   def index
-    @weeks_in_lives = WeeksInLife.all
+    #TODO: account_id replace with current_account.id
+    @weeks_in_lives = WeeksInLife.where(account_id: 1)
+
+    render format: :json
   end
+
 
   # GET /weeks_in_lives/1
   # GET /weeks_in_lives/1.json
