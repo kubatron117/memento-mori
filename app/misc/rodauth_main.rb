@@ -26,7 +26,7 @@ class RodauthMain < Rodauth::Rails::Auth
 
     # The secret key used for hashing public-facing tokens for various features.
     # Defaults to Rails `secret_key_base`, but you can use your own secret key.
-    # hmac_secret "a2e5bf558b4e78f2ca5d2fd0202293fdb064ebf676e558213ffa60d12121c68aa957a05d13d5a462ba833a4c67172b435d2dadddd1611891f6fe992be63c6fb0"
+    # hmac_secret "896a894061571c696803e81c47a7613bf272b4d41695c7bbd96fee7625c291f1c832c106e44ab3761114be463110c499ab1b49b5e4b11a499d854f4574a7037e"
 
     # Use a rotatable password pepper when hashing passwords with Argon2.
     # argon2_secret { hmac_secret }
