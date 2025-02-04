@@ -77,6 +77,10 @@ class RodauthMain < Rodauth::Rails::Auth
     # Redirect to the app from login and registration pages if already logged in.
     # already_logged_in { redirect login_redirect }
 
+    create_verify_account_email do
+      RodauthMailer.verify_account(self.class.configuration_name, account_id, verify_account_key_value)
+    end
+
     # ==> Emails
     send_email do |email|
       # queue email delivery on the mailer after the transaction commits

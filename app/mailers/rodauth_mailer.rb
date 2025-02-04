@@ -4,7 +4,6 @@ class RodauthMailer < ApplicationMailer
   def verify_account(name, account_id, key)
     @rodauth = rodauth(name, account_id) { @verify_account_key_value = key }
     @account = @rodauth.rails_account
-    @fe_url = ENV.fetch('FRONTEND_URL') + '/verify-account/' + key
 
     mail subject: @rodauth.email_subject_prefix + @rodauth.verify_account_email_subject
   end
