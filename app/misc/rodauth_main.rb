@@ -61,7 +61,7 @@ class RodauthMain < Rodauth::Rails::Auth
 
     # Change some default param keys.
     login_param "email"
-    login_confirm_param "email-confirm"
+    # login_confirm_param "email-confirm"
     # password_confirm_param "confirm_password"
 
     # Redirect back to originally requested location after authentication.
