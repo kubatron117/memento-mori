@@ -81,6 +81,10 @@ class RodauthMain < Rodauth::Rails::Auth
       RodauthMailer.verify_account(self.class.configuration_name, account_id, verify_account_key_value)
     end
 
+    create_reset_password_email do
+      RodauthMailer.reset_password(self.class.configuration_name, account_id, reset_password_key_value)
+    end
+
     # ==> Emails
     send_email do |email|
       # queue email delivery on the mailer after the transaction commits
