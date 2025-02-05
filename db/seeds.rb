@@ -17,7 +17,8 @@ Account.create!(
   date_of_birth: '1954-01-01',
   estimated_lifespan: '2034-01-01',
   email: "kubatron117@gmail.com",
-  password: 'Password123@'
+  password: 'Password123@',
+  status: 2
 )
 #
 # Account.create!(
@@ -28,7 +29,8 @@ Account.create!(
 #   date_of_birth: '1990-01-01',
 #   estimated_lifespan: '2070-01-01',
 #   email: "pepa@novak.local",
-#   password: 'Password123@'
+#   password: 'Password123@',
+#   status: 2
 # )
 
 
