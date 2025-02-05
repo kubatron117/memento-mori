@@ -1,4 +1,4 @@
-class GenerateWeeksInLiveJob < ApplicationJob
+class GenerateWeekInLiveJob < ApplicationJob
   queue_as :default
 
   def perform

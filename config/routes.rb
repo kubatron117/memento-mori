@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1, defaults: { format: :json } do
       resources :weeks_in_lives
+      put "weeks_in_lives/memo/:id", to: "weeks_in_lives#update_memo"
       get "accounts/info", to: "accounts#account_info"
     end
   end

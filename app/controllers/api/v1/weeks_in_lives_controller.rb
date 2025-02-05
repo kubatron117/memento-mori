@@ -1,5 +1,5 @@
 class Api::V1::WeeksInLivesController < ApplicationController
-  before_action :set_weeks_in_life, only: %i[ show update destroy ]
+  before_action :set_weeks_in_life, only: %i[ show update destroy update_memo]
 
   # GET /weeks_in_lives
   # GET /weeks_in_lives.json
@@ -19,6 +19,7 @@ class Api::V1::WeeksInLivesController < ApplicationController
   # POST /weeks_in_lives
   # POST /weeks_in_lives.json
   def create
+    #TODO: disable this endpoint - cron create new weeks
     @weeks_in_life = WeeksInLife.new(weeks_in_life_params)
 
     if @weeks_in_life.save
@@ -33,6 +34,15 @@ class Api::V1::WeeksInLivesController < ApplicationController
   def update
     if @weeks_in_life.update(weeks_in_life_params)
       render :show, status: :ok, location: @weeks_in_life
+    else
+      render json: @weeks_in_life.errors, status: :unprocessable_entity
+    end
+  end
+
+  # PATCH/PUT /weeks_in_lives/memo/1
+  def update_memo
+    if @weeks_in_life.update(weeks_in_life_memo_params)
+      render json: @weeks_in_life
     else
       render json: @weeks_in_life.errors, status: :unprocessable_entity
     end
@@ -54,4 +64,8 @@ class Api::V1::WeeksInLivesController < ApplicationController
     def weeks_in_life_params
       params.expect(weeks_in_life: [ :start_date, :end_date, :week_number, :year, :memo, :account_id ])
     end
+
+  def weeks_in_life_memo_params
+    params.expect(weeks_in_life: [:memo])
+  end
 end
