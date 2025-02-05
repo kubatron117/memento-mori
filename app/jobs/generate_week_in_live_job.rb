@@ -1,42 +1,39 @@
-class GenerateWeekInLiveJob < ApplicationJob
+class GenerateWeeksInLiveJob < ApplicationJob
   queue_as :default
 
-  def perform(*args)
-    # current_week_number = Date.current.cweek
-    # puts current_week_number
-    #
-    # # Každý týden v pátek se pustí cron a vygenruje záznam pro všechny uživatele pro následujicí týden
-    # # TODO: Nutno napsat na toto testy
-    #
-    #
-    # current_week = WeekInLife.where(week_number: current_week_number, year: Date.current.year)
-    #
-    # if current_week.blank?
-    #   Account.each do |account|
-    #     WeekInLife.create(start_date: Date.current.beginning_of_week, end_date: Date.current.end_of_week,
-    #                       week_number: current_week_number, year: Date.current.year, account_id: account.id)
-    #   end
-    # end
-    #
-    # if current_week.present?
-    current_date = Date.current
-
-    next_week_date = current_date + 7.days
-
-    next_week_number = next_week_date.cweek
-    next_year = next_week_date.cwyear
+  def perform
+    target_week_start = next_week_start
 
     Account.find_each do |account|
-      weeks_in_life = WeeksInLife.where(week_number: next_week_number, year: next_year, account_id: account.id)
-      if weeks_in_life.blank?
-        WeeksInLife.create(
-          start_date: next_week_date.beginning_of_week,
-          end_date: next_week_date.end_of_week,
-          week_number: next_week_number,
-          year: next_year,
-          account_id: account.id
-        )
-      end
+      generate_missing_weeks_for(account, target_week_start)
+    end
+  end
+
+  private
+
+  def next_week_start
+    (Date.current + 7.days).beginning_of_week
+  end
+
+  def generate_missing_weeks_for(account, target_week_start)
+    last_week_record = WeeksInLife.where(account: account).order(start_date: :desc).first
+
+    week_to_create = last_week_record ? last_week_record.start_date + 7.days : target_week_start
+
+    while week_to_create <= target_week_start
+      create_week_record(account, week_to_create)
+      week_to_create += 7.days
+    end
+  end
+
+  def create_week_record(account, week_start_date)
+    WeeksInLife.find_or_create_by!(
+      account: account,
+      week_number: week_start_date.cweek,
+      year: week_start_date.cwyear
+    ) do |record|
+      record.start_date = week_start_date
+      record.end_date   = week_start_date.end_of_week
     end
   end
 end
