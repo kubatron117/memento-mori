@@ -51,6 +51,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_23_083936) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.index ["email"], name: "index_accounts_on_email", unique: true, where: "(status = ANY (ARRAY[1, 2]))"
+    t.check_constraint "email ~ '^[^,;@ \r\n]+@[^,@; \r\n]+.[^,@; \r\n]+$'::citext", name: "valid_email"
   end
 
   create_table "solid_queue_blocked_executions", force: :cascade do |t|
@@ -180,9 +181,16 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_23_083936) do
     t.integer "week_number"
     t.integer "year"
     t.string "memo", limit: 2048
+    t.integer "score_satisfaction"
+    t.integer "score_emotional_balance"
+    t.integer "score_productivity"
+    t.integer "score_relationships"
+    t.integer "score_values_alignment"
+    t.integer "total_score"
     t.bigint "account_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["account_id", "week_number", "year"], name: "index_weeks_in_lives_on_account_id_and_week_number_and_year", unique: true
     t.index ["account_id"], name: "index_weeks_in_lives_on_account_id"
   end
 
