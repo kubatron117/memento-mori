@@ -132,6 +132,7 @@ class RodauthMain < Rodauth::Rails::Auth
     extend_remember_deadline? true
 
     create_account_autologin? false
+    # verify_account_autologin? false
 
 
     before_create_account do

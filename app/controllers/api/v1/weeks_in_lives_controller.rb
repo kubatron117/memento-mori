@@ -4,10 +4,13 @@ class Api::V1::WeeksInLivesController < ApplicationController
   # GET /weeks_in_lives
   # GET /weeks_in_lives.json
   def index
-    #TODO: account_id replace with current_account.id
-    @weeks_in_lives = WeeksInLife.where(account_id: curent_account.id)
+    if current_account.present?
+      @weeks_in_lives = WeeksInLife.where(account_id: current_account&.id)
 
-    render format: :json
+      render format: :json
+    else
+      render json: {error: "Account not found"}, status: :not_found
+    end
   end
 
 
