@@ -4,6 +4,9 @@ class WeeksInLife < ApplicationRecord
   validate :allowed_week_update, on: :update
 
 
+  before_save :count_total_score
+
+
   private
   def allowed_week_update
     allowed_start_dates = [
@@ -16,5 +19,9 @@ class WeeksInLife < ApplicationRecord
     end
   end
 
+  def count_total_score
+    self.total_score = self.score_satisfaction + self.score_emotional_balance + self.score_productivity +
+      self.score_relationships + self.score_values_alignment
+  end
 
 end
