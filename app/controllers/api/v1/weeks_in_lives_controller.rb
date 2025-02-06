@@ -1,5 +1,5 @@
 class Api::V1::WeeksInLivesController < ApplicationController
-  before_action :set_weeks_in_life, only: %i[ show update destroy update_memo]
+  before_action :set_weeks_in_life, only: %i[ show update destroy update_week_rating_and_memo]
 
   # GET /weeks_in_lives
   # GET /weeks_in_lives.json
@@ -43,7 +43,7 @@ class Api::V1::WeeksInLivesController < ApplicationController
   end
 
   # PATCH/PUT /weeks_in_lives/memo/1
-  def update_memo
+  def update_week_rating_and_memo
     if @weeks_in_life.update(weeks_in_life_memo_params)
       render json: @weeks_in_life
     else
@@ -69,6 +69,7 @@ class Api::V1::WeeksInLivesController < ApplicationController
     end
 
   def weeks_in_life_memo_params
-    params.expect(weeks_in_life: [:memo])
+    params.expect(weeks_in_life: [:memo, :score_satisfaction, :score_emotional_balance, :score_productivity,
+                                  :score_relationships, :score_values_alignment])
   end
 end
