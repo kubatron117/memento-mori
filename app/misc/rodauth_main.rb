@@ -160,6 +160,18 @@ class RodauthMain < Rodauth::Rails::Auth
     end
 
 
+    after_create_account do
+      week_start = Date.current.beginning_of_week
+      WeeksInLife.create!(
+        account_id: account_id,
+        start_date: week_start,
+        end_date: week_start.end_of_week,
+        week_number: week_start.cweek,
+        year: week_start.cwyear
+      )
+    end
+
+
 
     # ==> Hooks
     # Validate custom fields in the create account form.

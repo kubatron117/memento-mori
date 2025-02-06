@@ -5,7 +5,7 @@ class Api::V1::WeeksInLivesController < ApplicationController
   # GET /weeks_in_lives.json
   def index
     #TODO: account_id replace with current_account.id
-    @weeks_in_lives = WeeksInLife.where(account_id: 1)
+    @weeks_in_lives = WeeksInLife.where(account_id: curent_account.id)
 
     render format: :json
   end
