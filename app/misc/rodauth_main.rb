@@ -131,6 +131,36 @@ class RodauthMain < Rodauth::Rails::Auth
     # Extend user's remember period when remembered via a cookie
     extend_remember_deadline? true
 
+    create_account_autologin? false
+
+
+    before_create_account do
+      if param("first_name").blank?
+        throw_error_status(422, "first_name", "must be present")
+      else
+        account["first_name"] = param("first_name")
+      end
+
+      if param("last_name").blank?
+        throw_error_status(422, "last_name", "must be present")
+      else
+        account["last_name"] = param("last_name")
+      end
+
+      if param("agree_to_terms").to_s != "true"
+        throw_error_status(422, "agree_to_terms", "must be accepted")
+      else
+        account["user_agreement"] = true
+      end
+
+      now = Time.current
+      account["created_at"] = now
+      account["updated_at"] = now
+      account["date_of_agreement"] = now
+    end
+
+
+
     # ==> Hooks
     # Validate custom fields in the create account form.
     # before_create_account do
