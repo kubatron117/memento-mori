@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       resources :weeks_in_lives
       put "weeks_in_lives/memo/:id", to: "weeks_in_lives#update_memo"
       get "accounts/info", to: "accounts#account_info"
+      put "accounts/dates", to: "accounts#update_dates"
     end
   end
 
