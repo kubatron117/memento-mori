@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_23_083936) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_12_082059) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "citext"
   enable_extension "pg_catalog.plpgsql"
@@ -52,6 +52,30 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_23_083936) do
     t.datetime "updated_at"
     t.index ["email"], name: "index_accounts_on_email", unique: true, where: "(status = ANY (ARRAY[1, 2]))"
     t.check_constraint "email ~ '^[^,;@ \r\n]+@[^,@; \r\n]+.[^,@; \r\n]+$'::citext", name: "valid_email"
+  end
+
+  create_table "life_expectancies", force: :cascade do |t|
+    t.integer "birth_year"
+    t.float "life_expectancy_both"
+    t.float "life_expectancy_male"
+    t.float "life_expectancy_female"
+    t.integer "loc_id"
+    t.bigint "location_id", null: false
+    t.bigint "variant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["location_id"], name: "index_life_expectancies_on_location_id"
+    t.index ["variant_id"], name: "index_life_expectancies_on_variant_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "location", limit: 255
+    t.string "iso3_code", limit: 3
+    t.string "iso2_code", limit: 2
+    t.integer "loc_type_id"
+    t.string "loc_type_name", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "solid_queue_blocked_executions", force: :cascade do |t|
@@ -175,6 +199,13 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_23_083936) do
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
   end
 
+  create_table "variants", force: :cascade do |t|
+    t.integer "var_id"
+    t.string "variant", limit: 255
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "weeks_in_lives", force: :cascade do |t|
     t.date "start_date"
     t.date "end_date"
@@ -198,6 +229,8 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_23_083936) do
   add_foreign_key "account_password_reset_keys", "accounts", column: "id"
   add_foreign_key "account_remember_keys", "accounts", column: "id"
   add_foreign_key "account_verification_keys", "accounts", column: "id"
+  add_foreign_key "life_expectancies", "locations"
+  add_foreign_key "life_expectancies", "variants"
   add_foreign_key "solid_queue_blocked_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_claimed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
   add_foreign_key "solid_queue_failed_executions", "solid_queue_jobs", column: "job_id", on_delete: :cascade
