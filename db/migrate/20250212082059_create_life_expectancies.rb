@@ -11,5 +11,8 @@ class CreateLifeExpectancies < ActiveRecord::Migration[8.0]
 
       t.timestamps
     end
+
+    add_index :life_expectancies, :location_id
+    add_index :life_expectancies, :variant_id
   end
 end
