@@ -101,6 +101,5 @@ test:
 #    migrations_paths: db/cable_migrate
 production:
   <<: *default
-  database: <%= ENV["POSTGRES_DATABASE"] %>
-  username: <%= ENV["POSTGRES_USER"] %>
-  password: <%= ENV["POSTGRES_PASSWORD"] %>
+  database: memorian_production
+  password: <%= ENV["POSTGRES_ROOT_PASSWORD"] %>
