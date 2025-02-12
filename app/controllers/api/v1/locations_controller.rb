@@ -4,7 +4,8 @@ class Api::V1::LocationsController < ApplicationController
   # GET /locations
   # GET /locations.json
   def index
-    @locations = Location.all
+    @q = Location.ransack(params[:q])
+    @locations = @q.result
   end
 
   # GET /locations/1
