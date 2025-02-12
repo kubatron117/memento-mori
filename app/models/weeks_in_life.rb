@@ -1,11 +1,36 @@
 class WeeksInLife < ApplicationRecord
   belongs_to :account
 
+  validates :start_date, presence: true
+  validates :end_date, presence: true
+  validates :week_number,
+            presence: true,
+            numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 53 },
+            uniqueness: { scope: [:account_id, :year], message: "For this year is exist" }
+  validates :year,
+            presence: true,
+            numericality: { only_integer: true }
+  validates :memo, length: { maximum: 2048 }, allow_blank: true
+  validates :score_satisfaction, numericality: { only_integer: true, allow_nil: true }
+  validates :score_emotional_balance, numericality: { only_integer: true, allow_nil: true }
+  validates :score_productivity, numericality: { only_integer: true, allow_nil: true }
+  validates :score_relationships, numericality: { only_integer: true, allow_nil: true }
+  validates :score_values_alignment, numericality: { only_integer: true, allow_nil: true }
+  validates :total_score, numericality: { only_integer: true, allow_nil: true }
+
+  validate :end_date_after_start_date
   validate :allowed_week_update, on: :update
 
   before_save :count_total_score, if: :score_attributes_updated?
 
   private
+
+  def end_date_after_start_date
+    return if start_date.blank? || end_date.blank?
+    if end_date < start_date
+      errors.add(:end_date, "Must be after the start date")
+    end
+  end
 
   def allowed_week_update
     allowed_start_dates = [

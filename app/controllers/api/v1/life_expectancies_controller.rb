@@ -1,4 +1,4 @@
-class LifeExpectanciesController < ApplicationController
+class Api::V1::LifeExpectanciesController < ApplicationController
   before_action :set_life_expectancy, only: %i[ show update destroy ]
 
   # GET /life_expectancies

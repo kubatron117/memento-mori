@@ -17,6 +17,9 @@ Rails.application.routes.draw do
       put "weeks_in_lives/memo/:id", to: "weeks_in_lives#update_week_rating_and_memo"
       get "accounts/info", to: "accounts#account_info"
       put "accounts/dates", to: "accounts#update_dates"
+      resources :life_expectancies
+      resources :variants
+      resources :locations
     end
   end
 
