@@ -93,6 +93,8 @@ accessories:
    host: api.memorian.io
    port: "127.0.0.1:5432:5432"
    env:
+     clear:
+       POSTGRES_USER: postgres
      secret:
        - POSTGRES_ROOT_PASSWORD
    files:
