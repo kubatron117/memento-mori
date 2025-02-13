@@ -1,1 +1,4 @@
-CREATE DATABASE memorian_production;
+CREATE DATABASE memento_mori_production;
+CREATE DATABASE memento_mori_production_cache;
+CREATE DATABASE memento_mori_production_queue;
+CREATE DATABASE memento_mori_production_cable;

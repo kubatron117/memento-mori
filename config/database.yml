@@ -18,7 +18,7 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: <%= ENV.fetch("POSTGRES_USER") { "root" } %>
+  username: <%= ENV.fetch("POSTGRES_USER") { "postgres" } %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>
   host: postgres
 
@@ -81,25 +81,21 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
-#production:
-#  primary: &primary_production
-#    <<: *default
-#    database: memento_mori_production
-#    username: memento_mori
-#    password: <%#= ENV["MEMENTO_MORI_DATABASE_PASSWORD"] %>
-#  cache:
-#    <<: *primary_production
-#    database: memento_mori_production_cache
-#    migrations_paths: db/cache_migrate
-#  queue:
-#    <<: *primary_production
-#    database: memento_mori_production_queue
-#    migrations_paths: db/queue_migrate
-#  cable:
-#    <<: *primary_production
-#    database: memento_mori_production_cable
-#    migrations_paths: db/cable_migrate
 production:
-  <<: *default
-  database: memorian_production
-  password: <%= ENV["POSTGRES_ROOT_PASSWORD"] %>
+  primary: &primary_production
+    <<: *default
+    database: memento_mori_production
+    username: postgres
+    password: <%= ENV["POSTGRES_ROOT_PASSWORD"] %>
+  cache:
+    <<: *primary_production
+    database: memento_mori_production_cache
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *primary_production
+    database: memento_mori_production_queue
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *primary_production
+    database: memento_mori_production_cable
+    migrations_paths: db/cable_migrate
