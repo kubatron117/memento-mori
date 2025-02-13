@@ -86,7 +86,7 @@ production:
     <<: *default
     database: memento_mori_production
     username: postgres
-    password: <%= ENV["POSTGRES_ROOT_PASSWORD"] %>
+    password: <%= ENV["POSTGRES_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: memento_mori_production_cache

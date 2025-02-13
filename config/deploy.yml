@@ -97,7 +97,7 @@ accessories:
        POSTGRES_USER: postgres
        POSTGRES_DB: memento_mori_production
      secret:
-       - POSTGRES_ROOT_PASSWORD
+       - POSTGRES_PASSWORD
    files:
      - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
    directories:
