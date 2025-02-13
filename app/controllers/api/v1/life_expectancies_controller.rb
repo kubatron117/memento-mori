@@ -4,7 +4,8 @@ class Api::V1::LifeExpectanciesController < ApplicationController
   # GET /life_expectancies
   # GET /life_expectancies.json
   def index
-    @life_expectancies = LifeExpectancy.all
+    @q = LifeExpectancy.ransack(params[:q])
+    @life_expectancies = @q.result
   end
 
   # GET /life_expectancies/1
