@@ -1,4 +1,5 @@
 class Api::V1::LocationsController < ApplicationController
+  before_action :authenticate
   before_action :set_location, only: %i[ show update destroy ]
 
   # GET /locations

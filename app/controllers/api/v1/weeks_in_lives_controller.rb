@@ -1,4 +1,5 @@
 class Api::V1::WeeksInLivesController < ApplicationController
+  before_action :authenticate
   before_action :set_weeks_in_life, only: %i[ show update destroy update_week_rating_and_memo]
 
   # GET /weeks_in_lives

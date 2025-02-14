@@ -1,4 +1,5 @@
 class Api::V1::AccountsController < ApplicationController
+  before_action :authenticate
   #GET /api/v1/account/info
   def account_info
     if current_account.present?
