@@ -14,6 +14,10 @@ production:
     class: GenerateWeekInLiveJob
     queue: background
     schedule: "1 0 * * *"
+  periodic_send_weekly_email_with_remind:
+    class: SendWeeklyEmailWithRemindJob
+    queue: background
+    schedule: "15 17 * * 7"
 
 development:
   periodic_generate_weeks_in_life:

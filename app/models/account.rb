@@ -2,6 +2,8 @@ class Account < ApplicationRecord
   include Rodauth::Rails.model
   enum :status, { unverified: 1, verified: 2, closed: 3 }
 
+  has_many :weeks_in_lives, dependent: :destroy
+
   validate :date_of_birth_cannot_be_in_the_future
   validate :estimated_lifespan_must_be_at_least_one_month
 
