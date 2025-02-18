@@ -11,12 +11,12 @@
 
 production:
   periodic_generate_weeks_in_life:
-    class: GenerateWeeksInLifeJob
+    class: GenerateWeekInLiveJob
     queue: background
     schedule: "1 0 * * *"
 
 development:
   periodic_generate_weeks_in_life:
-    class: GenerateWeeksInLifeJob
+    class: GenerateWeekInLiveJob
     queue: background
     schedule: "* * * * *"
