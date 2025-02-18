@@ -11,6 +11,8 @@ class GenerateWeekInLiveJob < ApplicationJob
 
   private
 
+  #TODO: je třeba vyřešit co se bude dít když dojde na datum očekávaného konce
+
   def next_week_start
     (Date.current + 7.days).beginning_of_week
   end
