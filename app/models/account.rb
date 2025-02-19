@@ -6,6 +6,7 @@ class Account < ApplicationRecord
 
   validate :date_of_birth_cannot_be_in_the_future
   validate :estimated_lifespan_must_be_at_least_one_month
+  validate :estimated_lifespan_cannot_be_in_the_past
 
   private
 
@@ -20,6 +21,13 @@ class Account < ApplicationRecord
     return if estimated_lifespan.blank? || date_of_birth.blank?
     if estimated_lifespan < date_of_birth + 1.month
       errors.add(:estimated_lifespan, "Must be at least one month after date of birth")
+    end
+  end
+
+  def estimated_lifespan_cannot_be_in_the_past
+    return if estimated_lifespan.blank?
+    if estimated_lifespan < Date.today
+      errors.add(:estimated_lifespan, "cannot be in the past")
     end
   end
 end
