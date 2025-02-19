@@ -15,7 +15,7 @@ production:
     queue: background
     schedule: "1 0 * * *"
   periodic_send_weekly_email_with_remind:
-    class: SendWeeklyEmailWithRemindJob
+    class: SendWeekDataEntryReminderJob
     queue: background
     schedule: "15 17 * * 7"
 
