@@ -6,6 +6,7 @@ class Api::V1::LocationsController < ApplicationController
   # GET /locations.json
   def index
     @q = Location.ransack(params[:q])
+    @q.sorts = 'location asc' if @q.sorts.empty?
     @locations = @q.result
   end
 
