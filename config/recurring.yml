@@ -17,7 +17,7 @@ production:
   periodic_send_weekly_email_with_remind:
     class: SendWeekDataEntryReminderJob
     queue: background
-    schedule: "15 17 * * 7"
+    schedule: "18 18 * * sun"
 
 development:
   periodic_generate_weeks_in_life:
