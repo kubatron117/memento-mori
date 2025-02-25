@@ -11,8 +11,6 @@ class GenerateWeekInLiveJob < ApplicationJob
 
   private
 
-  #TODO: je třeba vyřešit co se bude dít když dojde na datum očekávaného konce
-
   def next_week_start
     (Date.current + 7.days).beginning_of_week
   end
@@ -22,7 +20,7 @@ class GenerateWeekInLiveJob < ApplicationJob
 
     week_to_create = last_week_record ? last_week_record.start_date + 7.days : target_week_start
 
-    while week_to_create <= target_week_start
+    while week_to_create <= target_week_start && (account.estimated_lifespan.nil? || week_to_create <= account.estimated_lifespan)
       create_week_record(account, week_to_create)
       week_to_create += 7.days
     end
