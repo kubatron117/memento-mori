@@ -33,7 +33,7 @@ gem "thruster", '~> 0.1.10', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
 gem 'rack-cors', '~> 2.0.2'
 
-gem "rodauth-rails", "~> 2.0.2"
+gem "rodauth-rails", "~> 2.1.0"
 
 gem 'ransack', "~> 4.2.1"
 
