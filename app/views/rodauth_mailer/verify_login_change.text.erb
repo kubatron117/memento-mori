@@ -1,0 +1,33 @@
+Česká verze
+
+Vážený uživateli,
+
+Někdo s účtem požádal o změnu přihlášení na tuto e-mailovou adresu:
+
+Původní e-mail: <%= @account.email %>
+Nový e-mail: <%= @new_email %>
+
+Pokud jste o změnu přihlášení nežádali, ignorujte tuto zprávu.
+Pokud jste o změnu přihlášení žádali, přejděte prosím na <%= @rodauth.verify_login_change_email_link %>
+abyste změnu ověřili.
+
+Děkujeme,
+Memorian
+
+-------------------------------------------------------------
+
+English version
+
+Dear User,
+
+An account has requested a login change to this email address:
+
+Original email: <%= @account.email %>
+New email: <%= @new_email %>
+
+If you did not request this login change, please ignore this message.
+If you did request this login change, please follow <%= @rodauth.verify_login_change_email_link %>
+to verify the change.
+
+Thank you,
+Memorian
