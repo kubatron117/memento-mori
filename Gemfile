@@ -35,7 +35,7 @@ gem 'rack-cors', '~> 2.0.2'
 
 gem "rodauth-rails", "~> 2.0.2"
 
-gem 'ransack', "~> 4.2.1"
+gem 'ransack', "~> 4.3.0"
 
 gem 'aws-sdk-rails', '~> 5'
 gem 'aws-actionmailer-ses', '~> 1'
