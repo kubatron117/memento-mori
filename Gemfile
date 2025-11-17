@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.0.1"
+gem "rails", "~> 8.0.4"
 # Use mysql as the database for Active Record
 # gem "mysql2", "~> 0.5.6"
 gem "pg", "~> 1.5.9"
@@ -28,12 +28,12 @@ gem "bootsnap", require: false
 gem "kamal", require: false
 
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
-gem "thruster", '~> 0.1.10', require: false
+gem "thruster", '~> 0.1.16', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin Ajax possible
-gem 'rack-cors', '~> 2.0.2'
+gem 'rack-cors', '~> 3.0.0'
 
-gem "rodauth-rails", "~> 2.0.2"
+gem "rodauth-rails", "~> 2.1.1"
 
 gem 'ransack', "~> 4.2.1"
 
