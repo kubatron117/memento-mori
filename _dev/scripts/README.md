@@ -9,3 +9,6 @@
 * alias rails="./_dev/scripts/rails.sh"
 * alias gemi="./_dev/scripts/gem_install.sh"
 * alias p="sudo ./_dev/scripts/permissions.sh"
+
+
+gunzip -c /db.sql.gz | docker exec -i db-container psql -U user
