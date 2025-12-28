@@ -52,7 +52,7 @@ env:
 
     # Match this to any external database server to configure Active Record correctly
     # Use memento_mori-db for a db accessory server on same machine via local kamal docker network.
-    DB_HOST: memorian-db
+    DB_HOST: memorian-postgres-1
 
     # Log everything from Rails
     RAILS_LOG_LEVEL: debug
